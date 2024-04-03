@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@types/node": "^20.12.2",
+    "@vueuse/core": "^10.9.0",
+    "jwt-decode": "^4.0.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "vuetify": "^3.5.13"
