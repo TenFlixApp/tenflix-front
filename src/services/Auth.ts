@@ -19,8 +19,4 @@ export default class {
             requestOptions
         )
     }
-
-    public isConnected(): Promise<Response> {
-        return this.sendSecuredRequest(import.meta.env.VITE_AUTH_BASE_URL + "check-token")
-    }
 }
