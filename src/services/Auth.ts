@@ -1,22 +1,17 @@
-export default class {
-    private sendSecuredRequest(url: string, options: RequestInit = {}): Promise<Response> {
-        const requestOptions = {
-            ...options,
-            headers: {
-                Authorization:  "Bearer " + localStorage.getItem("BEARER_TOKEN"),
-                creditential: 'include'
-            }
+import { useJwt } from "@vueuse/integrations/useJwt";
+
+export default class {  
+    public isConnected(): boolean {
+        const token = localStorage.getItem("BEARER_TOKEN");
+        if (!token) {
+            return false;
         }
-        console.log(requestOptions)
-        if (options?.headers) {
-            requestOptions.headers = {
-                ...requestOptions.headers,
-                ...options.headers
-            }
+        const { payload } = useJwt(token || "");
+
+        if (!payload) {
+            return false;
         }
-        return fetch(
-            url, 
-            requestOptions
-        )
+        console.log(payload);
+        return true;
     }
 }

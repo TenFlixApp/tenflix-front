@@ -1,10 +1,19 @@
 import { RouteRecordRaw } from "vue-router";
+import AuthService from "@/services/Auth"
+
+const authService = new AuthService();
 
 const routes: RouteRecordRaw[] = [
     { 
         name: 'home', 
-        path: '/', 
-        component: () => import("./HomePage.vue"),
+        path: '/home',
+        component: () => {
+            if (authService.isConnected()) {
+                return import("./HomePage.vue")
+            } else {
+                return import("./HomeNCPage.vue")
+            }
+        },
         meta: {
             public: true
         }
@@ -16,6 +25,10 @@ const routes: RouteRecordRaw[] = [
         meta: {
             droits: ["DROIT1"]
         }
+    },
+    {
+        path: '/:catchAll(.*)',
+        redirect: '/home'
     }
 ];
 

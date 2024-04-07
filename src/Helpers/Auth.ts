@@ -1,4 +1,4 @@
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import { Rights } from "@/constants/Rights";
 
 interface TokenAuth {
