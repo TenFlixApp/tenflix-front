@@ -8,5 +8,7 @@ import vuetify from './plugins/vuetify'
 // Vue-Router
 import router from './plugins/router'
 
+// Pinia
+import pinia from '@/plugins/pinia'
 
-createApp(App).use(vuetify).use(router).mount('#app')
+createApp(App).use(vuetify).use(router).use(pinia).mount('#app')
