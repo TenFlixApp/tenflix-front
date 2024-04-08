@@ -1,22 +1,13 @@
 <script setup lang="ts">
 import AuthDialog from "@/components/Dialogs/AuthDialog.vue"
-import { ref } from "vue"
+import { useAuthStore, useDialogStore } from "@/stores";
 
-const dialogOpened = ref(false)
-const dialogType = ref("")
+const dialogStore = useDialogStore()
+const authStore = useAuthStore()
 
-function openDialog(event: Event, type: string) {
-  event.preventDefault();
-  dialogOpened.value = true
-  dialogType.value = type
-}
-
-function changeDialog(type: string) {
-  dialogType.value = type
-}
-
-function closeDialog() {
-  dialogOpened.value = false
+function openDialog(type: string) {
+  authStore.dialogType = type
+  dialogStore.createDialog(AuthDialog)
 }
 </script>
 
@@ -25,12 +16,11 @@ function closeDialog() {
     <div class="content mx-4 w-25 my-auto h-screen d-flex flex-column justify-center align-end">
       <h1>Tenflix</h1>
       <span>Le streaming autrement</span>
-      <a v-on:click="openDialog($event, 'register')" href="" class="subtext">Cliquez ici <v-icon>mdi-arrow-right-thin</v-icon></a>
+      <a @click.prevent="openDialog('register')" href="" class="subtext">Cliquez ici <v-icon>mdi-arrow-right-thin</v-icon></a>
     </div>
     <div class="pictures h-screen">
     </div>
-    <v-btn color="#e0e0e0" variant="outlined" class="connect" text="se connecter" v-on:click="openDialog($event, 'login')"></v-btn>
-    <AuthDialog @change-dialog="changeDialog($event)" @close-dialog="closeDialog" :dialog-opened="dialogOpened" :dialog-type="dialogType" />
+    <v-btn color="#e0e0e0" variant="outlined" class="connect" text="se connecter" @click="openDialog('login')"></v-btn>
   </div>
 </template>
 

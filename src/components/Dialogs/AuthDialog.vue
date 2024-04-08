@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import { toast } from "vue3-toastify"
+import AuthService from "@/services/auth"
+import { useDialog } from "@/composables"
+import { useAuthStore } from "@/stores"
 
 const props = defineProps<{
-  dialogOpened: boolean,
-  dialogType: string
+  guid: string
 }>();
 
-const emit = defineEmits<{
-  (e: 'changeDialog', type: string): void,
-  (e: 'closeDialog'): void
-}>()
+const authStore = useAuthStore()
+
+const { isOpened } = useDialog(props.guid)
 
 const nom = ref("")
 const nomRules = [
@@ -30,35 +32,57 @@ const passwordRules = [
   (v: string) => (v && v.length >= 8) || "Votre mot de passe doit contenir au moins 8 caractères"
 ]
 const valid = ref(false)
+const loading = ref(false)
 
-function auth() {
-  console.log("test")
+const authService = new AuthService();
+authService.isConnected()
+
+async function auth() {
+  loading.value = true;
+  // TODO 
+  await authService.login(email.value, password.value)
+    .then(response => {
+      localStorage.setItem("ACCESS_TOKEN", response.token);
+      localStorage.setItem("REFRESH_TOKEN", response.refreshToken);
+
+      // TODO - gérer le register en back
+
+      location.reload();
+    }, (error) => {
+      toast.error(error.message)
+    })
+    .finally(() => {
+      loading.value = false;
+    })
 }
 
-function handleChangeDialog(event: Event, type: string) {
-  event.preventDefault();
-  emit('changeDialog', type)
+function handleChangeDialog(type: string) {
+  authStore.dialogType = type
 }
 </script>
 
 <template>
-  <v-dialog v-on:click:outside="emit('closeDialog')" v-model="props.dialogOpened" :width="$vuetify.display.xs ? 'unset' : '500px'"><!-- min-width="340px" max-width="550px" -->
+  <v-dialog v-model="isOpened"
+    :width="$vuetify.display.xs ? 'unset' : '500px'">
     <v-card color="#e0e0e0" class="py-4 rounded-lg">
       <v-card-title class="text-h4 d-flex justify-center mb-8"><span>S'identifier</span></v-card-title>
       <v-card-text>
         <v-form @submit.prevent v-model="valid" class="d-flex flex-column ga-4 mb-8">
-          <v-text-field :rules="nomRules" v-model="nom" label="Nom" required v-if="props.dialogType === 'register'"></v-text-field>
-          <v-text-field :rules="prenomRules" v-model="prenom" label="Prénom" required v-if="props.dialogType === 'register'"></v-text-field>
+          <v-text-field :rules="nomRules" v-model="nom" label="Nom" required
+            v-if="authStore.dialogType === 'register'"></v-text-field>
+          <v-text-field :rules="prenomRules" v-model="prenom" label="Prénom" required
+            v-if="authStore.dialogType === 'register'"></v-text-field>
           <v-text-field :rules="emailRules" v-model="email" label="Email" required></v-text-field>
           <v-text-field type="password" :rules="passwordRules" v-model="password" label="Mot de passe"
             required></v-text-field>
-          <v-btn v-on:click="auth" :disabled="!valid" color="#bb86fc" text="Envoyer" class="align-self-end"></v-btn>
+          <v-btn :loading="loading" @click="auth" :disabled="!valid" color="#bb86fc" text="Envoyer"
+            class="align-self-end"></v-btn>
         </v-form>
-        <p v-if="props.dialogType === 'register'">
-          si vous possédez déjà un compte : <a href="" v-on:click="handleChangeDialog($event, 'login')">se connecter</a>
+        <p v-if="authStore.dialogType === 'register'">
+          si vous possédez déjà un compte : <a href="" @click.prevent="handleChangeDialog('login')">se connecter</a>
         </p>
         <p v-else>
-          si vous ne possédez pas de compte : <a href="" v-on:click="handleChangeDialog($event, 'register')">s'inscrire</a>
+          si vous ne possédez pas de compte : <a href="" @click.prevent="handleChangeDialog('register')">s'inscrire</a>
         </p>
       </v-card-text>
     </v-card>
@@ -67,3 +91,4 @@ function handleChangeDialog(event: Event, type: string) {
 </template>
 
 <style scoped lang="scss"></style>
+@/services/auth
