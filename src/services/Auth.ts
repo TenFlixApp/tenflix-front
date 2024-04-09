@@ -1,22 +1,78 @@
+import { jwtDecode } from "jwt-decode"
+import { sendSecuredRequest } from "./Request";
+import { AuthResponse } from "@/Types";
+import { useAuthStore } from "@/stores";
+
 export default class {
-    private sendSecuredRequest(url: string, options: RequestInit = {}): Promise<Response> {
-        const requestOptions = {
-            ...options,
-            headers: {
-                Authorization:  "Bearer " + localStorage.getItem("BEARER_TOKEN"),
-                creditential: 'include'
+    public isConnected(): boolean {
+        const authStore = useAuthStore()
+        try {
+            const token = authStore.accessToken;
+            if (!token || token.length === 0) {
+                return false;
             }
-        }
-        console.log(requestOptions)
-        if (options?.headers) {
-            requestOptions.headers = {
-                ...requestOptions.headers,
-                ...options.headers
+            const payload = jwtDecode(token);
+
+            if (!payload || !payload.exp) {
+                return false;
             }
+
+            // Seuil pour déterminer si le timestamp est en millisecondes
+            const MILLIS_THRESHOLD = 1000000000000;
+
+            // transformation du dateNow en unix sans miliseconds (comparaison avec le jeton)
+
+            let now = Date.now()
+            if (now > MILLIS_THRESHOLD) {
+                now = Math.floor(now / 1000)
+            }
+
+            if (now > payload.exp) {
+                return false;
+            }
+
+            return true;
+            
+        } catch {
+            return false;
         }
-        return fetch(
-            url, 
-            requestOptions
-        )
+    }
+
+    public async login(username: string, password: string): Promise<AuthResponse> {
+        return sendSecuredRequest(import.meta.env.VITE_AUTH_BASE_URL + "login", {
+            method: "POST",
+            body: JSON.stringify({
+                username: username,
+                password: password,
+            })
+        }).then(async (response) => {
+            if (!response.ok) {
+                return response.json().then(body => {
+                    throw new Error(body.error)
+                })
+            } else {
+                return await response.json();
+            }
+        })
+    }
+
+    public async register(nom: string, prenom: string, email: string, password: string): Promise<AuthResponse> {
+        return sendSecuredRequest(import.meta.env.VITE_BACKEND_BASE_URL + "user/register", {
+            method: "POST",
+            body: JSON.stringify({
+                nom: nom,
+                prenom: prenom,
+                email: email,
+                password: password,
+            })
+        }).then(async (response) => {
+            if (!response.ok) {
+                return response.json().then(body => {
+                    throw new Error(body.error)
+                })
+            } else {
+                return await response.json();
+            }
+        })
     }
 }

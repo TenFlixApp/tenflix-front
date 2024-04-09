@@ -1,7 +1,6 @@
 import { createWebHistory, createRouter, Router } from 'vue-router'
-import routes from "@/pages"
 import AuthService from "@/services/Auth"
-import { Rights } from '@/constants/Rights'
+import routes from "@/pages"
 
 const router: Router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
@@ -10,17 +9,24 @@ const router: Router = createRouter({
 
 const authService = new AuthService();
 
-router.beforeEach((to, _, next) => {
-    // const { isAuthenticated } = useAuthStore()
-    const isPublic = to.meta.public === true;
-
-    if (!isPublic) {
-        authService.isConnected()
-            .then((response) => {
-                
-            })
+// redirection si accès a page de connexion alors que connecté
+router.beforeResolve((to, from, next) => {
+    if (to.name === '' && authService.isConnected()) {
+        if (!from?.name || from.name?.toString() === "") {
+            next({ name: "home" })
+        }
+    } else {
+        next()
     }
-    
+})
+
+// redirection vers page de connexion si pas connecté
+router.beforeResolve((to, _, next) => {
+    if (!to.meta.public && !authService.isConnected()) {
+        next({ name: ''})
+    } else {
+        next()
+    }
 })
 
 export default router;

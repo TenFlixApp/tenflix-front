@@ -8,7 +8,11 @@ import vuetify from './plugins/vuetify'
 // Vue-Router
 import router from './plugins/router'
 
+// Vue-Toastify
+import Vue3Toastify from 'vue3-toastify'
+import options from '@/plugins/toastify'
+
 // Pinia
 import pinia from '@/plugins/pinia'
 
-createApp(App).use(vuetify).use(router).use(pinia).mount('#app')
+createApp(App).use(vuetify).use(router).use(Vue3Toastify, options).use(pinia).mount('#app')
