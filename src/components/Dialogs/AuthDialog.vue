@@ -41,8 +41,8 @@ async function auth() {
   // TODO 
   await authService.login(email.value, password.value)
     .then(response => {
-      localStorage.setItem("ACCESS_TOKEN", response.token);
-      localStorage.setItem("REFRESH_TOKEN", response.refreshToken);
+      authStore.accessToken = response.token;
+      authStore.refreshToken = response.refreshToken;
 
       // TODO - gérer le register en back
 

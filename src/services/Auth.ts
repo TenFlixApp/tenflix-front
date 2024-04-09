@@ -1,17 +1,19 @@
 import { jwtDecode } from "jwt-decode"
 import { sendSecuredRequest } from "./request";
 import { AuthResponse } from "@/Types";
+import { useAuthStore } from "@/stores";
 
 export default class {
     public isConnected(): boolean {
+        const authStore = useAuthStore()
         try {
-            const token = localStorage.getItem("ACCESS_TOKEN");
+            const token = authStore.accessToken;
             if (!token) {
                 return false;
             }
             const payload = jwtDecode(token || "");
 
-            if (!payload || !payload.exp || payload.exp > Date.now()) {
+            if (!payload || !payload.exp || payload.exp < Date.now()) {
                 return false;
             }
 
