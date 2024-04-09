@@ -11,9 +11,23 @@ export default class {
             if (!token || token.length === 0) {
                 return false;
             }
-            const payload = jwtDecode(token || "");
+            const payload = jwtDecode(token);
 
-            if (!payload || !payload.exp || payload.exp < Date.now()) {
+            if (!payload || !payload.exp) {
+                return false;
+            }
+
+            // Seuil pour déterminer si le timestamp est en millisecondes
+            const MILLIS_THRESHOLD = 1000000000000;
+
+            // transformation du dateNow en unix sans miliseconds (comparaison avec le jeton)
+
+            let now = Date.now()
+            if (now > MILLIS_THRESHOLD) {
+                now = Math.floor(now / 1000)
+            }
+
+            if (now > payload.exp) {
                 return false;
             }
 
