@@ -39,12 +39,11 @@ const authService = new AuthService();
 async function auth() {
   loading.value = true;
   // TODO 
-  await authService.login(email.value, password.value)
+  if (authStore.dialogType === 'login') {
+    await authService.login(email.value, password.value)
     .then(response => {
       authStore.accessToken = response.token;
       authStore.refreshToken = response.refreshToken;
-
-      // TODO - gérer le register en back
 
       location.reload();
     }, (error) => {
@@ -53,6 +52,20 @@ async function auth() {
     .finally(() => {
       loading.value = false;
     })
+  } else {
+    await authService.register(nom.value, prenom.value, email.value, password.value)
+    .then(response => {
+      authStore.accessToken = response.token;
+      authStore.refreshToken = response.refreshToken;
+
+      location.reload();
+    }, (error) => {
+      toast.error(error.message)
+    })
+    .finally(() => {
+      loading.value = false;
+    })
+  }
 }
 
 function handleChangeDialog(type: string) {

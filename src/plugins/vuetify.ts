@@ -24,5 +24,8 @@ export default createVuetify({
     themes: {
       theme
     }
-  }
+  },
+  display: {
+    mobileBreakpoint: 'sm'
+  },
 })

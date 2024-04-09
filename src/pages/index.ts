@@ -7,28 +7,19 @@ const routes: RouteRecordRaw[] = [
     { 
         name: 'home', 
         path: '/home',
-        component: () => {
-            if (authService.isConnected()) {
-                return import("./HomePage.vue")
-            } else {
-                return import("./HomeNCPage.vue")
-            }
-        },
+        component: () => import("./HomePage.vue")
+    },
+    {
+        name: '',
+        path: '/',
+        component: () => import("./HomeNCPage.vue"),
         meta: {
             public: true
         }
     },
-    { 
-        name: 'about', 
-        path: '/about',
-        component: () => import("./AboutPage.vue"),
-        meta: {
-            droits: ["DROIT1"]
-        }
-    },
     {
         path: '/:catchAll(.*)',
-        redirect: '/home'
+        redirect: () => "/home"
     }
 ];
 

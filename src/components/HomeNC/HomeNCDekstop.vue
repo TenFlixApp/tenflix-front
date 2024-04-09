@@ -12,7 +12,7 @@ function openDialog(type: string) {
 </script>
 
 <template>
-  <div class="home-nc w-100 h-screen overflow-hidden">
+  <div class="home-nc w-100 h-screen">
     <div class="content mx-4 w-25 my-auto h-screen d-flex flex-column justify-center align-end">
       <h1>Tenflix</h1>
       <span>Le streaming autrement</span>

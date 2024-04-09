@@ -12,7 +12,7 @@ function openDialog(type: string) {
 </script>
 
 <template>
-  <div class="home-nc w-100 h-screen overflow-hidden d-flex flex-column justify-space-evenly align-center">
+  <div class="home-nc w-100 h-screen d-flex flex-column justify-space-evenly align-center">
     <h1>Tenflix</h1>
     <v-img :max-height="300" :aspect-ratio="16/9" class="w-75" src="/assets/HomeNC/icons.png" alt="HomeNCMobile"></v-img>
     <div class="d-flex flex-column ga-8 w-100 px-16">
