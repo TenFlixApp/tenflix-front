@@ -1,28 +1,12 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import HelloWorld from './components/HelloWorld.vue'
-
-const router = useRouter();
-
-function navigate(name: string) {
-  router.push({name})
-}
+import Navbar from '@/components/navbar/Desktop.vue'
 </script>
 
 <template>
-  <HelloWorld msg="Vite + Vue" />
-  <nav>
-    <v-btn v-on:click="navigate('home')">
-      Button1
-    </v-btn>
-    <v-btn v-on:click="navigate('about')">
-      Button2
-    </v-btn>
-  </nav>
-  <main>
-    <RouterView />
-  </main>
+  <v-app>
+    <v-main>
+      <Navbar />
+      <RouterView />
+    </v-main>
+  </v-app>
 </template>
-
-<style scoped>
-</style>
