@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <p>salut fdp</p>
+  <p>Home page</p>
 </template>
 
 <style scoped lang="scss">

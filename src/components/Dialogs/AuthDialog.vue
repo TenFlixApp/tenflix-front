@@ -35,7 +35,6 @@ const valid = ref(false)
 const loading = ref(false)
 
 const authService = new AuthService();
-authService.isConnected()
 
 async function auth() {
   loading.value = true;
@@ -65,13 +64,13 @@ function handleChangeDialog(type: string) {
   <v-dialog v-model="isOpened"
     :width="$vuetify.display.xs ? 'unset' : '500px'">
     <v-card color="#e0e0e0" class="py-4 rounded-lg">
-      <v-card-title class="text-h4 d-flex justify-center mb-8"><span>S'identifier</span></v-card-title>
+      <v-card-title class="text-h4 d-flex justify-center mb-8">S'identifier</v-card-title>
       <v-card-text>
         <v-form @submit.prevent v-model="valid" class="d-flex flex-column ga-4 mb-8">
-          <v-text-field :rules="nomRules" v-model="nom" label="Nom" required
-            v-if="authStore.dialogType === 'register'"></v-text-field>
-          <v-text-field :rules="prenomRules" v-model="prenom" label="Prénom" required
-            v-if="authStore.dialogType === 'register'"></v-text-field>
+          <template v-if="authStore.dialogType === 'register'">  
+            <v-text-field :rules="nomRules" v-model="nom" label="Nom" required />  
+            <v-text-field :rules="prenomRules" v-model="prenom" label="Prénom" required />  
+          </template>  
           <v-text-field :rules="emailRules" v-model="email" label="Email" required></v-text-field>
           <v-text-field type="password" :rules="passwordRules" v-model="password" label="Mot de passe"
             required></v-text-field>
@@ -91,4 +90,3 @@ function handleChangeDialog(type: string) {
 </template>
 
 <style scoped lang="scss"></style>
-@/services/auth

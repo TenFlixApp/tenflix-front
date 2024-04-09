@@ -6,6 +6,6 @@
 </script>
 
 <template>
-  <HomeNCDekstop v-if="!$vuetify.display.xs" />
+  <HomeNCDekstop v-if="!$vuetify.display.mobile" />
   <HomeNCMobile v-else />
 </template>
