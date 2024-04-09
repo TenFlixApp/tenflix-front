@@ -13,7 +13,7 @@ export default class {
             }
             const payload = jwtDecode(token || "");
 
-            if (!payload || !payload.exp || payload.exp > Date.now()) {
+            if (!payload || !payload.exp || payload.exp < Date.now()) {
                 return false;
             }
 
