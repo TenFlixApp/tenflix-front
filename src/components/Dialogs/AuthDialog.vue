@@ -103,4 +103,3 @@ function handleChangeDialog(type: string) {
 </template>
 
 <style scoped lang="scss"></style>
-@/services/auth
