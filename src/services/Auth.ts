@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode"
-import { sendSecuredRequest } from "./request";
+import { sendSecuredRequest } from "./Request";
 import { AuthResponse } from "@/Types";
 import { useAuthStore } from "@/stores";
 

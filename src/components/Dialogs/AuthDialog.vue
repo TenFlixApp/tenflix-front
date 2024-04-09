@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { toast } from "vue3-toastify"
-import AuthService from "@/services/auth"
+import AuthService from "@/services/Auth"
 import { useDialog } from "@/composables"
 import { useAuthStore } from "@/stores"
 

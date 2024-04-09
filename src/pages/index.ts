@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
-import AuthService from "@/services/auth"
+import AuthService from "@/services/Auth"
 
 const authService = new AuthService();
 
