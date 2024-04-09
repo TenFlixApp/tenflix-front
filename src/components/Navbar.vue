@@ -7,6 +7,11 @@ link: string;
 perm: string;
 }
 
+interface Notif {
+    avatar: string;
+    title: string;
+    sub: string;
+}
 const boutons = ref<Bouton[]>([
     { titre: "Acceuil", link: "/" , perm: "all" },
     { titre: "Recherche", link: "/recherche" , perm: "all" },
@@ -15,11 +20,14 @@ const boutons = ref<Bouton[]>([
     { titre: "Dashboard", link: "/dashboard" , perm: "admin" },
     { titre: "Gestion comptes", link: "/gestion-comptes" , perm: "admin" }
 ]);
-
+const notifs = ref<Notif[]>([
+    { avatar: "https://cdn.vuetifyjs.com/images/john.jpg", title: "John Leider", sub: "Founder of Vuetify" },
+    { avatar: "https://cdn.vuetifyjs.com/images/john.jpg", title: "titre 2", sub: "description" }
+]);
 const searchShowed = ref<boolean>(false);
 const menunotif = ref<boolean>(false);
 const menucompte = ref<boolean>(false);
-const logoPath = ref(' /logo.png');
+const logoPath = ref('/assets/logo.png');
 
 </script>
 
@@ -28,13 +36,13 @@ const logoPath = ref(' /logo.png');
         <img class="mr-3" :src="logoPath" height="40"/>
 
             <div v-for="bouton in boutons" :key="bouton.titre">
-                <v-btn variant="plain" color="bar" >{{ bouton.titre }}</v-btn>
+                <v-btn variant="plain" color="accent" >{{ bouton.titre }}</v-btn>
             </div>
         
         <v-spacer></v-spacer>
           
         <v-expand-transition>
-            <v-text-field hide-details label="Recherche" v-if="searchShowed" ></v-text-field>
+            <v-text-field hide-details label="Recherche" v-if="searchShowed" />
         </v-expand-transition>      
 
                 <v-btn variant="plain" icon="mdi-magnify" @click="searchShowed = !searchShowed" ></v-btn>
@@ -43,11 +51,11 @@ const logoPath = ref(' /logo.png');
                         <v-btn v-bind="props" variant="plain" icon="mdi-bell" ></v-btn>
                     </template>
                     <v-card min-width="300">
-                        <v-list>
+                        <v-list v-for="notif in notifs" :key="notif.title">
                         <v-list-item
-                            prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg"
-                            subtitle="Founder of Vuetify"
-                            title="John Leider"
+                            :prepend-avatar="notif.avatar"
+                            :sub="notif.sub"
+                            :title="notif.title"
                         >
                         </v-list-item>
                         </v-list>
