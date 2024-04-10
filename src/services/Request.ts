@@ -1,8 +1,12 @@
+import { useAuthStore } from "@/stores"
+
 export function sendSecuredRequest(url: string, options: RequestInit = {}): Promise<Response> {
+    const authStore = useAuthStore();
+
     const requestOptions = {
         ...options,
         headers: {
-            Authorization:  "Bearer " + localStorage.getItem("BEARER_TOKEN"),
+            Authorization:  "Bearer " + authStore.accessToken,
             creditential: 'include'
         }
     }
