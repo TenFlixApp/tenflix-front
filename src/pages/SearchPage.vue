@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import { ref, watch } from 'vue';
-import { MediaPreview } from '@/Types';
+import { MediaPreviewType } from '@/Types';
 import MediaService from '@/services/media';
 import { toast } from 'vue3-toastify';
 import MediaPreviewComponent from '@/components/Medias/MediaPreview.vue';
@@ -13,7 +13,7 @@ const mediaService = new MediaService();
 
 const search = ref<string>(route.params.search as string);
 
-const results = ref<MediaPreview[]>([]);
+const results = ref<MediaPreviewType[]>([]);
 
 async function searchMedia() {
   mediaService.searchMedia(search.value).then((data) => {
