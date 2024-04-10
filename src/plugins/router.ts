@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter, Router } from 'vue-router'
 import AuthService from "@/services/Auth"
 import routes from "@/pages"
+import vuetify from './vuetify';
 
 const router: Router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
@@ -24,6 +25,14 @@ router.beforeResolve((to, from, next) => {
 router.beforeResolve((to, _, next) => {
     if (!to.meta.public && !authService.isConnected()) {
         next({ name: ''})
+    } else {
+        next()
+    }
+})
+
+router.beforeResolve((to, _, next) => {
+    if (to.meta.reservedMobile && !vuetify.display.mobile.value) {
+        next({ name: '' })
     } else {
         next()
     }

@@ -44,7 +44,10 @@ export default class {
             body: JSON.stringify({
                 username: username,
                 password: password,
-            })
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }).then(async (response) => {
             if (!response.ok) {
                 return response.json().then(body => {
@@ -64,7 +67,10 @@ export default class {
                 prenom: prenom,
                 email: email,
                 password: password,
-            })
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }).then(async (response) => {
             if (!response.ok) {
                 return response.json().then(body => {
@@ -74,5 +80,11 @@ export default class {
                 return await response.json();
             }
         })
+    }
+
+    public logout() {
+        const authStore = useAuthStore()
+        authStore.accessToken = ""
+        authStore.refreshToken = ""
     }
 }
