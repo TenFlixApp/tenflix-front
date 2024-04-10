@@ -55,6 +55,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import("./UploadPage.vue")
     },
     {
+        name: 'media',
+        path: '/media/:id',
+        component: () => import("./MediaPage.vue")
+    },
+    {
         name: '',
         path: '/',
         component: () => import("./HomeNCPage.vue"),

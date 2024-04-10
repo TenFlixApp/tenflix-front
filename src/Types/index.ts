@@ -1,4 +1,4 @@
 import AuthResponse from "./AuthResponse";
-import MediaPreview from "./MediaPreview";
+import MediaPreviewType from "./MediaPreviewType";
 
-export type { AuthResponse, MediaPreview };
+export type { AuthResponse, MediaPreviewType };
