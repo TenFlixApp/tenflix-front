@@ -36,13 +36,19 @@ onMounted(() => {
     test.value = videojs(videoPlayer.value, {
         controls: true,
         autoplay: false,
-        preload: 'auto',
+        preload: 'none',
         fluid: true,
         responsive: true,
-        sources: [{
-            src: mediaUrl.value,
-            type: 'video/mp4'
-        }],
+        sources: [
+            {
+                src: mediaUrl.value,
+                type: 'video/avi'
+            },
+            {
+                src: mediaUrl.value,
+                type: 'video/mp4'
+            }
+        ],
         poster: mediaCoverUrl.value,
         aspectRatio: '16:9'
     })
@@ -76,7 +82,7 @@ async function addMediaToPlaylist(playlistId: number) {
         </v-row>
         <v-row>
             <v-col cols="12" md="6">
-                <h4>Titre de la vidéo</h4>
+                <h4>Titre</h4>
             </v-col>
             <v-col cols="10" md="3">
                 <div class="rounded-xl stats d-flex justify-space-around align-center">
@@ -93,10 +99,7 @@ async function addMediaToPlaylist(playlistId: number) {
                             </v-btn>
                         </template>
                         <v-list>
-                            <v-list-item v-for="(item, index) in playlists" :key="index">
-                                <v-list-item-title @click="addMediaToPlaylist(item.id)">{{ item.titre
-                                    }}</v-list-item-title>
-                            </v-list-item>
+                            <v-list-item v-for="item in playlists" :title="item.titre" @click="addMediaToPlaylist(item.id)" />
                         </v-list>
                     </v-menu>
                 </div>

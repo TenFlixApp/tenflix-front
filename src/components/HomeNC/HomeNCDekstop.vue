@@ -16,7 +16,7 @@ function openDialog(type: string) {
     <div class="content mx-4 w-25 my-auto h-screen d-flex flex-column justify-center align-end">
       <h1>Tenflix</h1>
       <span>Le streaming autrement</span>
-      <a @click.prevent="openDialog('register')" href="" class="subtext">Cliquez ici <v-icon>mdi-arrow-right-thin</v-icon></a>
+      <a @click.prevent="openDialog('register')" href="" class="subtext">Inscrivez-vous<v-icon>mdi-arrow-right-thin</v-icon></a>
     </div>
     <div class="pictures h-screen">
     </div>

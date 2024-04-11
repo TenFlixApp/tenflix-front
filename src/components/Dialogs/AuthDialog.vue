@@ -84,17 +84,15 @@ function handleChangeDialog(type: string) {
             <v-text-field :rules="nomRules" v-model="nom" label="Nom" required />  
             <v-text-field :rules="prenomRules" v-model="prenom" label="Prénom" required />  
           </template>  
-          <v-text-field :rules="emailRules" v-model="email" label="Email" required></v-text-field>
-          <v-text-field type="password" :rules="passwordRules" v-model="password" label="Mot de passe"
-            required></v-text-field>
-          <v-btn :loading="loading" @click="auth" :disabled="!valid" color="#bb86fc" text="Envoyer"
-            class="align-self-end"></v-btn>
+          <v-text-field :rules="emailRules" v-model="email" label="Email" required />
+          <v-text-field type="password" :rules="passwordRules" v-model="password" label="Mot de passe" required />
+          <v-btn :loading="loading" @click="auth" :disabled="!valid" color="#bb86fc" text="Confirmer" class="align-self-end" />
         </v-form>
         <p v-if="authStore.dialogType === 'register'">
-          si vous possédez déjà un compte : <a href="" @click.prevent="handleChangeDialog('login')">se connecter</a>
+          si vous possédez déjà un compte : <a href="" @click.prevent="handleChangeDialog('login')">Se Connecter</a>
         </p>
         <p v-else>
-          si vous ne possédez pas de compte : <a href="" @click.prevent="handleChangeDialog('register')">s'inscrire</a>
+          si vous ne possédez pas de compte : <a href="" @click.prevent="handleChangeDialog('register')">S'inscrire</a>
         </p>
       </v-card-text>
     </v-card>

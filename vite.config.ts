@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '.',
+  base: './',
   build: {
     target: 'esnext',
     outDir: './dist'
@@ -17,5 +17,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    port: 3000
   }
 })

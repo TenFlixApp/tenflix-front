@@ -12,6 +12,7 @@ const media = ref<File[]>([]);
 const cover = ref<File[]>([]);
 const title = ref('');
 const description = ref('');
+const loading = ref(false);
 
 function upload() {
   const errors = [];
@@ -31,6 +32,7 @@ function upload() {
     return;
   }
 
+  loading.value = true;
   mediaService.uploadMedia(media.value[0], cover.value[0], title.value, description.value)
     .then(() => {
       toast.success('Média uploadé avec succès, vous allez être redirigé vers l\'acceuil dans quelques secondes');
@@ -40,6 +42,9 @@ function upload() {
     })
     .catch(() => {
       toast.error('Erreur lors de l\'upload du média');
+    })
+    .finally(() => {
+      loading.value = false;
     });
 }
 </script>
@@ -67,7 +72,7 @@ function upload() {
     <v-row class="px-4">
       <v-col cols="12" class="d-flex ga-16" :class="$vuetify.display.mobile ? 'justify-center' : 'justify-end'">
         <v-btn @click="router.push({name: 'home'})" color="#e0e0e0">Retour à l'acceuil</v-btn>
-        <v-btn @click="upload" prepend-icon="mdi-upload" color="accent">Upload</v-btn>
+        <v-btn @click="upload" :loading="loading" prepend-icon="mdi-upload" color="accent">Upload</v-btn>
       </v-col>
     </v-row>
   </div>
