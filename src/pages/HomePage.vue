@@ -19,11 +19,14 @@ mediaService.getRandomMedia(20).then((data) => {
 <template>
   <div class="px-4 py-4">
     <h4>Vidéos</h4>
-    <v-row>
+    <v-row v-if="medias.length">
       <v-col cols="12" sm="4" md="3" v-for="media in medias">
         <MediaPreview :media="media" />
       </v-col>
     </v-row>
+    <v-empty-state v-else
+      headline="Aucun média présent"
+      title="Les média mis en ligne s'afficheront ici." />
   </div>
 </template>
 

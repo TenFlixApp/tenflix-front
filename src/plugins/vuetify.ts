@@ -4,6 +4,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import { createVuetify, type ThemeDefinition  } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import { VEmptyState } from 'vuetify/labs/VEmptyState'
 
 const theme: ThemeDefinition = {
   dark: true,
@@ -14,7 +15,10 @@ const theme: ThemeDefinition = {
 
 
 export default createVuetify({
-  components,
+  components: {
+    ...components,
+    VEmptyState
+  },
   directives,
   icons: {
     defaultSet: 'mdi'

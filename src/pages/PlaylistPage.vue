@@ -11,6 +11,7 @@ const loadingCreation = ref<boolean>(false);
 const playlistName = ref<string>('');
 const playlists = ref<Playlist[]>([]);
 const playlistMedias = ref<MediaPreviewType[]>([]);
+const playlistSelected = ref()
 
 const playlistService = new PlaylistService();
 
@@ -39,9 +40,10 @@ async function createPlaylist() {
   });
 }
 
-async function selectPlaylyst(playlist: Playlist) {
+async function selectPlaylist(playlist: Playlist) {
   playlistService.getPlaylistMedias(playlist.id).then((data) => {
     playlistMedias.value = data;
+    playlistSelected.value = playlist.titre
     console.log(data)
   }).catch(() => {
     playlistMedias.value = [];
@@ -53,7 +55,7 @@ async function selectPlaylyst(playlist: Playlist) {
 <template>
   <v-row class="h-100">
     <v-col class="list-playlist overflow-y-auto d-flex flex-column align-center ga-4 px-8 mt-4" cols="12" md="4">
-      <v-btn variant="plain" v-for="playlist in playlists" class="w-100 text-left" @click="selectPlaylyst(playlist)">
+      <v-btn variant="plain" v-for="playlist in playlists" class="w-100 text-left" @click="selectPlaylist(playlist)">
         {{ playlist.titre }}
       </v-btn>
       <v-btn :prepend-icon="inputPlaylist ? 'mdi-close' : 'mdi-plus'" class="w-100" @click="inputPlaylist = !inputPlaylist">
@@ -64,7 +66,9 @@ async function selectPlaylyst(playlist: Playlist) {
         v-if="inputPlaylist" class="w-100 input-playlist" v-model="playlistName" @keydown.enter.prevent="createPlaylist" />
     </v-col>
     <v-col class="px-4 mt-4" cols="12" md="8">
-      <v-row>
+      <v-empty-state v-if="!playlistSelected" headline="Aucune playlist selectionnée" />
+      <v-empty-state v-else-if="playlistMedias.length === 0" headline="Aucun média dans la playlist" :title="`Playlist: ${playlistSelected}`" />
+      <v-row v-else>
         <v-col cols="12" md="4" v-for="media in playlistMedias">
           <MediaPreview :media="media" />
         </v-col>
