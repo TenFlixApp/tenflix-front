@@ -50,7 +50,14 @@ onMounted(() => {
             }
         ],
         poster: mediaCoverUrl.value,
-        aspectRatio: '16:9'
+        aspectRatio: '16:9',
+        plugins: {
+            hotkeys: {
+            volumeStep: 0.1,
+            seekStep: 5,
+            enableModifiersForNumbers: false
+            },
+        }
     })
 })
 
