@@ -77,7 +77,7 @@ async function addMediaToPlaylist(playlistId: number) {
     <div>
         <v-row>
             <v-col cols="12" md="9">
-                <video ref="videoPlayer" class="video-js"></video>
+                <video ref="videoPlayer" class="video-js" @contextmenu.prevent />
             </v-col>
         </v-row>
         <v-row>

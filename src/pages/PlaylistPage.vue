@@ -61,7 +61,7 @@ async function selectPlaylyst(playlist: Playlist) {
       </v-btn>
       <v-text-field :loading="loadingCreation" :append-inner-icon="playlistName.trim().length > 0 ? 'mdi-plus' : ''"
         label="Playlist" variant="solo" hide-details single-line @click:append-inner="createPlaylist"
-        v-if="inputPlaylist" class="w-100 input-playlist" v-model="playlistName"></v-text-field>
+        v-if="inputPlaylist" class="w-100 input-playlist" v-model="playlistName" @keydown.enter.prevent="createPlaylist" />
     </v-col>
     <v-col class="px-4 mt-4" cols="12" md="8">
       <v-row>

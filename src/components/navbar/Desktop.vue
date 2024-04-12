@@ -22,8 +22,8 @@ interface BoutonsMenu {
 interface Notif {
     avatar: string;
     title: string;
-    sub: string;
 }
+
 const boutons = ref<Bouton[]>([
     { titre: "Acceuil", routeName: "home", perm: "all" },
     { titre: "Playlist", routeName: "playlists", perm: "all" },
@@ -45,8 +45,8 @@ const menuBoutons = ref<BoutonsMenu[]>([
 ])
 
 const notifs = ref<Notif[]>([
-    { avatar: "https://cdn.vuetifyjs.com/images/john.jpg", title: "John Leider", sub: "Founder of Vuetify" },
-    { avatar: "https://cdn.vuetifyjs.com/images/john.jpg", title: "titre 2", sub: "description" }
+    { avatar: "https://cdn.vuetifyjs.com/images/john.jpg", title: "Notification 1" },
+    { avatar: "https://cdn.vuetifyjs.com/images/john.jpg", title: "titre 2" }
 ]);
 const searchShowed = ref<boolean>(false);
 const search = ref<string>("")
@@ -78,8 +78,7 @@ const logoPath = ref('/assets/logo.png');
             </template>
             <v-card min-width="300">
                 <v-list>
-                    <v-list-item v-for="notif in notifs" :prepend-avatar="notif.avatar" :sub="notif.sub"
-                        :title="notif.title" />
+                    <v-list-item v-for="notif in notifs" :prepend-avatar="notif.avatar" :title="notif.title" />
                 </v-list>
             </v-card>
         </v-menu>

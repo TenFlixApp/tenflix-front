@@ -80,12 +80,12 @@ function handleChangeDialog(type: string) {
       <v-card-title class="text-h4 d-flex justify-center mb-8">S'identifier</v-card-title>
       <v-card-text>
         <v-form @submit.prevent v-model="valid" class="d-flex flex-column ga-4 mb-8">
-          <template v-if="authStore.dialogType === 'register'">  
-            <v-text-field :rules="nomRules" v-model="nom" label="Nom" required />  
-            <v-text-field :rules="prenomRules" v-model="prenom" label="Prénom" required />  
-          </template>  
+          <template v-if="authStore.dialogType === 'register'">
+            <v-text-field :rules="nomRules" v-model="nom" label="Nom" required @keydown.enter.prevent="auth" />
+            <v-text-field :rules="prenomRules" v-model="prenom" label="Prénom" required @keydown.enter.prevent="auth" />
+          </template>
           <v-text-field :rules="emailRules" v-model="email" label="Email" required />
-          <v-text-field type="password" :rules="passwordRules" v-model="password" label="Mot de passe" required />
+          <v-text-field type="password" :rules="passwordRules" v-model="password" label="Mot de passe" required @keydown.enter.prevent="auth" />
           <v-btn :loading="loading" @click="auth" :disabled="!valid" color="#bb86fc" text="Confirmer" class="align-self-end" />
         </v-form>
         <p v-if="authStore.dialogType === 'register'">
