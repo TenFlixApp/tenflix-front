@@ -1,16 +1,15 @@
-import { createWebHistory, createRouter, Router } from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 import AuthService from "@/services/Auth"
 import routes from "@/pages"
 import vuetify from './vuetify';
 
-const router: Router = createRouter({
+const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
 })
 
 const authService = new AuthService();
 
-// redirection si accès a page de connexion alors que connecté
 router.beforeResolve((to, from, next) => {
     if (to.name === '' && authService.isConnected()) {
         if (!from?.name || from.name?.toString() === "") {
@@ -21,7 +20,6 @@ router.beforeResolve((to, from, next) => {
     }
 })
 
-// redirection vers page de connexion si pas connecté
 router.beforeResolve((to, _, next) => {
     if (!to.meta.public && !authService.isConnected()) {
         next({ name: ''})
