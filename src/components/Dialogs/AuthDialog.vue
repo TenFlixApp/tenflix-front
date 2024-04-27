@@ -38,7 +38,6 @@ const authService = new AuthService();
 
 async function auth() {
   loading.value = true;
-  // TODO 
   if (authStore.dialogType === 'login') {
     await authService.login(email.value, password.value)
     .then(response => {
