@@ -1,4 +1,5 @@
 export enum Rights {
+    NONE = 0 << 0,
     READ = 1 << 0,
     WRITE_OWN = 1 << 1,
     WRITE_ALL = 1 << 2,

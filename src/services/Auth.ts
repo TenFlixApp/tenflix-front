@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode"
 import { sendSecuredRequest } from "./Request";
 import { AuthResponse } from "@/Types";
 import { useAuthStore } from "@/stores";
+import { Rights } from "@/constants/Rights";
 
 export default class {
     public isConnected(): boolean {
@@ -86,5 +87,27 @@ export default class {
         const authStore = useAuthStore()
         authStore.accessToken = ""
         authStore.refreshToken = ""
+    }
+
+    public hasRights(rights: Rights): boolean {
+        const connected = this.isConnected();
+        if (!connected) {
+            return false;
+        }
+        const authStore = useAuthStore()
+        try {
+            const token = authStore.accessToken;
+            if (!token || token.length === 0) {
+                return false;
+            }
+            const payload = jwtDecode(token);
+            if (!payload || !payload.rights || payload.rights < rights) {
+                return false;
+            }
+
+            return true;
+        } catch {
+            return false;
+        }
     }
 }

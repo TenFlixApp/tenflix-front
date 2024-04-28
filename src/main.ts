@@ -18,4 +18,7 @@ import pinia from '@/plugins/pinia'
 // videojs-hotkeys
 import "videojs-hotkeys"
 
-createApp(App).use(vuetify).use(router).use(Vue3Toastify, options).use(pinia).mount('#app')
+// ApexCharts
+import VueApexCharts from "vue3-apexcharts";
+
+createApp(App).use(vuetify).use(router).use(Vue3Toastify, options).use(pinia).use(VueApexCharts).mount('#app')

@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import AuthService from '@/services/Auth';
+import { Rights } from '@/constants/Rights';
 
 const router = useRouter();
 
@@ -10,7 +11,7 @@ const authService = new AuthService();
 interface Bouton {
     titre: string;
     routeName: string;
-    perm: string;
+    perm: Rights;
 }
 
 interface BoutonsMenu {
@@ -24,13 +25,15 @@ interface Notif {
     title: string;
 }
 
-const boutons = ref<Bouton[]>([
-    { titre: "Acceuil", routeName: "home", perm: "all" },
-    { titre: "Playlist", routeName: "playlists", perm: "all" },
-    { titre: "Abonnements", routeName: "abonnements", perm: "all" },
-    { titre: "Dashboard", routeName: "dashboard", perm: "admin" },
-    { titre: "Gestion comptes", routeName: "gestion-comptes", perm: "admin" }
+let boutons = ref<Bouton[]>([
+    { titre: "Acceuil", routeName: "home", perm: 0 },
+    { titre: "Playlist", routeName: "playlists", perm: 0 },
+    { titre: "Abonnements", routeName: "abonnements", perm: 0 },
+    { titre: "Dashboard", routeName: "dashboard", perm: Rights.SUPER_USER },
+    { titre: "Gestion comptes", routeName: "gestion-comptes", perm: Rights.ADMIN }
 ]);
+
+boutons.value = boutons.value.filter(b => authService.hasRights(b.perm));
 
 const menuBoutons = ref<BoutonsMenu[]>([
     { titre: "Votre compte", function: () => { router.push({ name: 'account' }) }, icone: "mdi-account" },

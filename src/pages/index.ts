@@ -1,3 +1,4 @@
+import { Rights } from "@/constants/Rights";
 import { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
@@ -24,12 +25,18 @@ const routes: RouteRecordRaw[] = [
     {
         name: 'dashboard',
         path: '/dashboard',
-        component: () => import("./DashboardPage.vue")
+        component: () => import("./DashboardPage.vue"),
+        meta: {
+            rights: Rights.SUPER_USER
+        }
     },
     {
         name: 'gestion-comptes',
         path: '/gestion-comptes',
-        component: () => import("./GestionComptePage.vue")
+        component: () => import("./GestionComptePage.vue"),
+        meta: {
+            rights: Rights.ADMIN
+        }
     },
     {
         name: 'menu',
