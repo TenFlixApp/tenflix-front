@@ -32,9 +32,7 @@ function applyResearch() {
 searchMedia();
 
 watch(() => route.params.search, (value) => {
-  Array.isArray(value) ? search.value = value[0] : search.value = value;
-  // TODO - fetch le résultat de la recherche
-  
+  search.value = Array.isArray(value) ? value[0] : value;
   searchMedia();
 })
 </script>

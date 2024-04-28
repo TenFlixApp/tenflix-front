@@ -18,11 +18,7 @@ export default class {
                 return false;
             }
 
-            // Seuil pour déterminer si le timestamp est en millisecondes
             const MILLIS_THRESHOLD = 1000000000000;
-
-            // transformation du dateNow en unix sans miliseconds (comparaison avec le jeton)
-
             let now = Date.now()
             if (now > MILLIS_THRESHOLD) {
                 now = Math.floor(now / 1000)
